@@ -1,6 +1,7 @@
 package com.dev.dao;
 
 import java.sql.*;
+import java.util.*;
 import com.dev.vo.MemberVO;
 public class MemberDAO {
 	
@@ -169,5 +170,54 @@ public class MemberDAO {
 		}
 	}
 	
+	public MemberVO memberDelete(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		MemberVO member = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement("delete from member where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		}
+		catch(Exception ex) {
+			System.out.println("(10)오류 발생" + ex);
+		}
+		finally {
+			close(conn,pstmt);
+		}
+		
+		return member;
+	}
+	
+	public ArrayList<MemberVO> memberList() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		MemberVO member = null;
+		
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement("select * from member");
+			rs = pstmt.executeQuery();
+			while(rs.next()) { //각 행을 기준으로 접근
+				member = new MemberVO();
+				member.setId(rs.getString(1));
+				member.setPasswd(rs.getString(2));
+				member.setName(rs.getString(3));
+				member.setMail(rs.getString(4));
+				list.add(member);
+			}
+		}
+		catch(Exception ex) {
+			System.out.println("오류 발생 : " + ex);
+		}
+		finally {
+			close(conn,pstmt,rs);
+		}
+		
+		return list;
+	}
 	
 }

@@ -5,28 +5,27 @@
 <title>수정</title>
 </head>
 <body>
-	<h3>수정 정보 검색</h3>
 	${error}
-	<form action="memberSearch.do" method="post">
-		ID : <input type="text" name="id" />
-		<input type="hidden" name="job" value="update" />
-		<input type="submit" value="검색" />
+<form action="memberSearch.do" method="post">
+	ID : <input type="text" name="id" />
+	<input type="hidden" name="job" value="update" />
+	<input type="submit" value="검색" />
+	<input type="button" value="홈" onclick="location.href='index.jsp'">
+</form>
+
+<% MemberVO member = (MemberVO)request.getAttribute("member");
+	if(member != null){
+%>
+	<form action="memberUpdate.do" method="post">
+	ID : <input type="text" name="id" readonly /> <br>
+	비밀번호 : <input type="password" name="passwd" /> <br>
+	이름 : <input type="text" name="name" /> <br>
+	메일 : <input type="text" name="mail" /> <br>
+	<input type="submit" value="업데이트" />
+	<input type="button" value="홈" onclick="location.href='index.jsp'"/>
 	</form>
+	<%} %>
+		
 	
-	<%MemberVO member = (MemberVO)request.getAttribute("member");
-		if(member != null){ %>
-		<h3>회원정보 수정</h3>
-		<form action="memberUpdate.do" method="post">
-			ID : <input type="text" name="id" value="${member.id}" />
-			비밀번호 : <input type="passwd" name="passwd" value="${member.passwd}" />
-			이름 : <input type="text" name="name" value="${member.name}"/>
-			E-mail : <input type="text" name="mail" value="${member.mail}" />
-			<input type="submit" value="수정"/>
-			</form>
-		<%} else{ %>
-				${result}
-		<%} %> 
-
-
 </body>
 </html>

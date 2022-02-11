@@ -26,19 +26,26 @@ public class MemberSearchController implements Controller {
 			request.setAttribute("error", "ID입력 바람");
 			ForwardPage.forward(request, response, path);
 		}
+
 		
 		MemberService service = MemberService.getInstance();
 		MemberVO member = service.memberSearch(id);
 		
 		if(member == null) {
 			request.setAttribute("result", "검색 값이 존재하지 않음");
+			request.setAttribute("error", "검색 값이 존재하지 않음 ");
 		}
 		else {
 			request.setAttribute("member", member);
 		}
 		
-		request.setAttribute("id", id);
-		ForwardPage.forward(request, response, "/result/memberSearchOutput.jsp");
+		request.setAttribute("id", id); //id값을 job에 해당하는 path로 던져줌 (컨트롤러 끼리 요청정보 공유 불가하므로 이렇게)
+		if(path.equals("memberSearch.jsp")) {
+			ForwardPage.forward(request, response, "/result/memberSearchOutput.jsp");
+		}
+		else {
+			ForwardPage.forward(request, response, path);
+		}
 		
 		
 	}

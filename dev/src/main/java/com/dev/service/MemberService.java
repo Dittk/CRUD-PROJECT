@@ -2,14 +2,13 @@ package com.dev.service;
 
 import com.dev.vo.MemberVO;
 import com.dev.dao.MemberDAO;
-
+import java.util.*;
 
 public class MemberService {
 	
 	private static MemberService service = new MemberService();
 	MemberDAO dao = MemberDAO.getInstance();
 	private MemberService() {};
-	MemberVO member = null;
 	public static MemberService getInstance() {
 		return service;
 	}
@@ -26,4 +25,20 @@ public class MemberService {
 		MemberVO member = dao.memberSearch(id);
 		return member;
 	}
+	
+	public void memberUpdate(MemberVO member) {
+		dao.memberUpdate(member);
+	}
+	
+	public MemberVO memberDelete(String id) {
+		MemberVO member = dao.memberDelete(id);
+		return member;
+	}
+		
+	public ArrayList<MemberVO> memberList() {
+		ArrayList<MemberVO> list = dao.memberList();
+		return list;
+	}
+	
+	
 }
