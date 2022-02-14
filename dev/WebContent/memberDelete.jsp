@@ -19,7 +19,10 @@
 	if(member != null){
 	%>
 		<h3>검색 정보 결과</h3>
-		${member.id} / ${member.passwd} / ${member.name} / ${member.mail} <br>
+		ID : ${member.id} <br>
+		비밀번호 : ${member.passwd} <br>
+		이름 : ${member.name} <br>
+		E-mail : ${member.mail} <br><br>
 		<form action="memberDelete.do" method="post">
 		<input type="hidden" name="id" value="${id}" />
 		<input type="submit" value="삭제"/>

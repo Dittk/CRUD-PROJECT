@@ -4,8 +4,11 @@
 <title>출력 결과 페이지</title>
 </head>
 <body>
-	<h3>회원가입 완료</h3>
-	${member.id} / ${member.passwd} / ${member.name} / ${member.mail} <br>
+	<h3>회원가입 완료 !</h3>
+	ID : ${member.id} <br> 
+	비밀번호 : ${member.passwd} <br> 
+	이름 : ${member.name} <br> 
+	E-mail : ${member.mail} <br><br>
 	<%@ include file="home.jsp" %> 
 </body>
 </html>

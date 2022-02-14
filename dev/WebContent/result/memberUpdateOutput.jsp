@@ -5,7 +5,7 @@
 </head>
 <body>
 
-${name}님 수정 되었습니다.
+${name}님 수정 되었습니다.<br><br>
 <%@ include file="home.jsp" %>
 
 </body>

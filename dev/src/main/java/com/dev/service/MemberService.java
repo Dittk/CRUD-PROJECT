@@ -17,8 +17,14 @@ public class MemberService {
 		dao.tableCreate();
 	}
 
-	public void memberInsert(MemberVO member) {
-		dao.memberInsert(member);
+	public int memberInsert(MemberVO member) {
+		int result = dao.memberInsert(member);
+		return result;
+	}
+	
+	public int memberDuplicate(String id) {
+		int result = dao.MemberDuplicate(id);
+		return result;
 	}
 	
 	public MemberVO memberSearch(String id) {
@@ -40,5 +46,9 @@ public class MemberService {
 		return list;
 	}
 	
+	public int memberLogin(String id, String passwd) {
+		int result = dao.memberLogin(id, passwd);
+		return result;
+	}
 	
 }

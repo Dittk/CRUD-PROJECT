@@ -9,7 +9,7 @@
 <form action="memberSearch.do" method="post">
 	ID : <input type="text" name="id" />
 	<input type="hidden" name="job" value="update" />
-	<input type="submit" value="검색" />
+	<input type="submit" value="검색" /><br><br>
 	<input type="button" value="홈" onclick="location.href='index.jsp'">
 </form>
 
@@ -17,7 +17,7 @@
 	if(member != null){
 %>
 	<form action="memberUpdate.do" method="post">
-	ID : <input type="text" name="id" readonly /> <br>
+	ID : <input type="text" name="id" value="${id}" readonly } /> <br>
 	비밀번호 : <input type="password" name="passwd" /> <br>
 	이름 : <input type="text" name="name" /> <br>
 	메일 : <input type="text" name="mail" /> <br>

@@ -2,6 +2,8 @@ package com.dev.dao;
 
 import java.sql.*;
 import java.util.*;
+
+import com.dev.controller.ForwardPage;
 import com.dev.vo.MemberVO;
 public class MemberDAO {
 	
@@ -10,6 +12,7 @@ public class MemberDAO {
 	public static MemberDAO getInstance() {
 		return dao;
 	}
+	int duplicate_result;
 	
 	public Connection connect() {
 		Connection conn = null;
@@ -97,17 +100,26 @@ public class MemberDAO {
 	
 	
 	
-	public void memberInsert(MemberVO member) {
+	public int memberInsert(MemberVO member) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		int insert_result = 0;
 		try {
-			conn = connect();
-			pstmt = conn.prepareStatement("insert into member values(?,?,?,?)");
-			pstmt.setString(1, member.getId());
-			pstmt.setString(2, member.getPasswd());
-			pstmt.setString(3, member.getName());
-			pstmt.setString(4, member.getMail());
-			pstmt.executeUpdate();
+			if(duplicate_result == 0) {
+				conn = connect();
+				pstmt = conn.prepareStatement("insert into member values(?,?,?,?)");
+				pstmt.setString(1, member.getId());
+				pstmt.setString(2, member.getPasswd());
+				pstmt.setString(3, member.getName());
+				pstmt.setString(4, member.getMail());
+				pstmt.executeUpdate();
+				insert_result = 1;
+				return insert_result;
+			}
+			else {
+				insert_result = 0;
+				return insert_result;
+			}
 		}
 		catch(Exception ex){
 			System.out.println("(8)오류 발생 " + ex);
@@ -115,7 +127,34 @@ public class MemberDAO {
 		finally {
 			close(conn,pstmt);
 		}
-		
+		return insert_result;
+	}
+	
+	public int MemberDuplicate(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement("select * from member where id=?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				duplicate_result = 1;
+				return duplicate_result;
+			}
+			else {
+				duplicate_result = 0;
+				return duplicate_result;
+			}
+		}
+		catch(Exception ex) {
+			System.out.println("(8-1)오류 발생" + ex);
+		}
+		finally {
+			close(conn,pstmt,rs);
+		}
+		return duplicate_result;
 	}
 	
 	public MemberVO memberSearch(String id) {
@@ -218,6 +257,33 @@ public class MemberDAO {
 		}
 		
 		return list;
+	}
+	
+	public int memberLogin(String id, String passwd) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			conn = connect();
+			pstmt= conn.prepareStatement("select passwd from member where id=?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString(1).equals(passwd)) {
+					result = 1;
+				}
+				else {
+					result = 0;
+				}
+			}
+		}
+	
+		catch(Exception ex) {
+			System.out.println("오류 발생 = " + ex);
+		}
+		
+		return result;
 	}
 	
 }

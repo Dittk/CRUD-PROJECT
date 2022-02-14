@@ -10,9 +10,12 @@
 			out.println(result);
 		}
 		else{
-		%>
+		%><br><br>
 		<h3>검색 결과 : </h3>
-		${member.id} / ${member.passwd} / ${member.name} / ${member.mail} <br>
+		ID : ${member.id} <br>
+		비밀번호 : ${member.passwd} <br>
+		이름 : ${member.name} <br>
+		E-mail : ${member.mail} <br><br>
 		<%} %>
 		<%@ include file="home.jsp" %>
 </body>

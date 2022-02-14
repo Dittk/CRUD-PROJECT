@@ -32,8 +32,8 @@ public class MemberSearchController implements Controller {
 		MemberVO member = service.memberSearch(id);
 		
 		if(member == null) {
-			request.setAttribute("result", "검색 값이 존재하지 않음");
-			request.setAttribute("error", "검색 값이 존재하지 않음 ");
+			request.setAttribute("result", "검색 값이 존재하지 않음 !!");
+			request.setAttribute("error", "검색 값이 존재하지 않음 !!");
 		}
 		else {
 			request.setAttribute("member", member);
